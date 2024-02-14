@@ -31,7 +31,7 @@ public class PrendaServiceImpl implements PrendaService {
 	    // Obtener la prenda existente por ID
 	    PrendaRopa prenda = obtenerPrendaPorId(id);
 
-	    // Actualizar los campos de la prenda existente con los valores de la nueva prenda
+	    // Actualdsdsizar los campos de la prenda existente con los valores de la nueva prenda
 	    prenda.setCategoria(ropa.getCategoria());
 	    prenda.setPrecio(ropa.getPrecio());
 	    prenda.setTalla(ropa.getTalla());
