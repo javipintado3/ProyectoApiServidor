@@ -50,6 +50,11 @@
     <artifactId>javafaker</artifactId>
     <version>1.0.2</version>
 </dependency>
+		     <dependency>
+		     	<groupId>com.dwes</groupId>
+		     	<artifactId>securityAPI</artifactId>
+		     	<version>0.0.1-SNAPSHOT</version>
+		     </dependency>
 	</dependencies>
 
 	<build>

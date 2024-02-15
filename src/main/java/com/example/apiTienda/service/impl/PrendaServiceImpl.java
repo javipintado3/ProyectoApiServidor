@@ -1,4 +1,4 @@
-package com.example.apiTienda.service;
+package com.example.apiTienda.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.apiTienda.entities.PrendaRopa;
-import com.example.apiTienda.exception.PrendaNotException;
+import com.example.apiTienda.error.exception.PrendaNotFoundException;
+
 import com.example.apiTienda.repository.PrendaRepository;
+import com.example.apiTienda.service.PrendaService;
 
 @Service
 public class PrendaServiceImpl implements PrendaService {
@@ -23,7 +25,7 @@ public class PrendaServiceImpl implements PrendaService {
 
 	@Override
 	public PrendaRopa obtenerPrendaPorId(Long id) {
-		return prendaRepository.findById(id).orElseThrow( () -> new PrendaNotException("Prenda no encontrada"));
+		return prendaRepository.findById(id).orElseThrow( () -> new PrendaNotFoundException("Prenda no encontrada"));
 	}
 
 	@Override
