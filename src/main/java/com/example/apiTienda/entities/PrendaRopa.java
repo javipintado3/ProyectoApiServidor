@@ -9,7 +9,11 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Data
 @Entity
 @Table(name = "prendaRopa")
 public class PrendaRopa {
@@ -28,37 +32,7 @@ public class PrendaRopa {
     @NotBlank(message = "La talla no puede estar vacía")
     private String talla;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
-	public Double getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(Double precio) {
-		this.precio = precio;
-	}
-
-	public String getTalla() {
-		return talla;
-	}
-
-	public void setTalla(String talla) {
-		this.talla = talla;
-	}
+	
     
     
 }

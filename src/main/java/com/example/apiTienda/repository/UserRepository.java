@@ -5,7 +5,9 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.dwes.security.entities.Usuario;
+import com.example.apiTienda.entities.Usuario;
+
+
 
 @Repository
 public interface UserRepository extends JpaRepository<Usuario, Long> {

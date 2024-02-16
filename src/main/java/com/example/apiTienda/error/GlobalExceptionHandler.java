@@ -14,8 +14,6 @@ import com.example.apiTienda.dto.response.error.ErrorDetailsResponse;
 import com.example.apiTienda.error.exception.PrendaNotFoundException;
 
 
-
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	/**
