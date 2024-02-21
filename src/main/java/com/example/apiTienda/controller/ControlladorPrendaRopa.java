@@ -41,9 +41,12 @@ public class ControlladorPrendaRopa {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Void> eliminarPrenda(@PathVariable Long id) {
-        prendaService.eliminarPrenda(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> eliminarPrenda(@PathVariable Long id) {
+        prendaService.obtenerPrendaPorId(id);
+    	prendaService.eliminarPrenda(id);
+        return new ResponseEntity<>("Prenda eliminada con id: " + id,HttpStatus.ACCEPTED);
+        
+
     }
 
     @GetMapping
