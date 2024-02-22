@@ -35,6 +35,10 @@ public class JwtServiceImpl implements JwtService {
     // Llave para firmar el JWT, obtenida del archivo de propiedades de la aplicación.
 	@Value("${jwt.secret}")
     private String jwtSigningKey;
+	
+    public void initializeSigningKey(String signingKey) {
+        this.jwtSigningKey = signingKey;
+    }
 
     // Extrae el nombre de usuario (subject) del token JWT.
     // En un JWT, el 'subject' suele referirse al identificador del usuario.
@@ -58,14 +62,14 @@ public class JwtServiceImpl implements JwtService {
 
     // Método genérico para extraer información del token JWT.
     // Los claims son declaraciones que contienen información sobre el usuario y metadatos adicionales.
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
         final Claims claims = extractAllClaims(token);
         return claimsResolvers.apply(claims);
     }
 
     // Genera el token JWT incluyendo los claims adicionales y los detalles del usuario.
     // Los claims adicionales pueden ser usados para almacenar información adicional sobre el usuario o el token.
-    private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
@@ -76,7 +80,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     // Verifica si el token ha expirado.
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 

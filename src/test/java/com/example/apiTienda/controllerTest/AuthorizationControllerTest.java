@@ -35,8 +35,8 @@ public class AuthorizationControllerTest {
     public void testMiPerfil() {
         // Create a mock Usuario for testing
         Usuario usuario = mock(Usuario.class);
-        when(usuario.getFirstName()).thenReturn("John");
-        when(usuario.getLastName()).thenReturn("Doe");
+        when(usuario.getFirstName()).thenReturn("Manuel");
+        when(usuario.getLastName()).thenReturn("Alonso");
         when(usuario.getEmail()).thenReturn("john.doe@example.com");
         when(usuario.getRoles()).thenReturn(Set.of(Role.ROLE_USER));
 
@@ -44,7 +44,7 @@ public class AuthorizationControllerTest {
         ResponseEntity<UsuarioResponse> response = authorizationController.miPerfil(usuario);
 
         // Verify that the response contains the expected user details
-        UsuarioResponse expectedResponse = new UsuarioResponse("John", "Doe", "john.doe@example.com", "[ROLE_USER]");
+        UsuarioResponse expectedResponse = new UsuarioResponse("Manuel", "Alonso", "manuel.alonso@example.com", "[ROLE_USER]");
         assertEquals(expectedResponse, response.getBody());
     }
 }

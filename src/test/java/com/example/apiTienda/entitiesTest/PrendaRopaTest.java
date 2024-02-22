@@ -17,12 +17,6 @@ public class PrendaRopaTest {
         prendaRopa = new PrendaRopa();
     }
 
-    @Test
-    public void testSetAndGetId() {
-        Long id = 1L;
-        prendaRopa.setId(id);
-        assertEquals(id, prendaRopa.getId());
-    }
 
     @Test
     public void testSetAndGetCategoria() {

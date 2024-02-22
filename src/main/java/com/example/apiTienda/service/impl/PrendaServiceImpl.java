@@ -14,8 +14,12 @@ import com.example.apiTienda.service.PrendaService;
 @Service
 public class PrendaServiceImpl implements PrendaService {
 
-	@Autowired
+	
 	private PrendaRepository prendaRepository;
+	
+	public PrendaServiceImpl(PrendaRepository prendaRepository) {
+		this.prendaRepository = prendaRepository;
+	}
 	
 	@Override
 	public PrendaRopa agregarPrendaRopa(PrendaRopa prendaRopa) {
