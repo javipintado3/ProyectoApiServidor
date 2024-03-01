@@ -16,6 +16,10 @@ import com.example.apiTienda.repository.PrendaRepository;
 import com.example.apiTienda.repository.UserRepository;
 import com.github.javafaker.Faker;
 
+/**
+ * Clase componente encargada de inicializar datos en la aplicación al implementar la interfaz CommandLineRunner.
+ * Se encarga de agregar usuarios y prendas a la base de datos al iniciar la aplicación.
+ */
 @Component
 public class InicializarDatos implements CommandLineRunner {
 
@@ -28,6 +32,12 @@ public class InicializarDatos implements CommandLineRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Método que se ejecuta al iniciar la aplicación. Agrega usuarios y prendas a la base de datos.
+     * 
+     * @param args Argumentos de línea de comandos (no utilizados en este caso).
+     * @throws Exception Excepción que puede ser lanzada durante la ejecución.
+     */
     @Override
     public void run(String... args) throws Exception {
 
@@ -79,6 +89,12 @@ public class InicializarDatos implements CommandLineRunner {
         }
     }
 
+    /**
+     * Método privado para obtener una categoría aleatoria de la enumeración Categoria.
+     * 
+     * @param faker Instancia de Faker para generación de datos aleatorios.
+     * @return Categoría aleatoria.
+     */
     private Categoria obtenerCategoriaAleatoria(Faker faker) {
         // Obtener una categoría aleatoria de la enumeración Categoria
         Categoria[] categorias = Categoria.values();
@@ -86,6 +102,12 @@ public class InicializarDatos implements CommandLineRunner {
         return categorias[indiceCategoriaAleatoria];
     }
 
+    /**
+     * Método privado para obtener una talla aleatoria.
+     * 
+     * @param faker Instancia de Faker para generación de datos aleatorios.
+     * @return Talla aleatoria.
+     */
     private String obtenerTallaAleatoria(Faker faker) {
         // Obetener talla aleatoria
         return faker.options().option("S", "M", "L", "XL");

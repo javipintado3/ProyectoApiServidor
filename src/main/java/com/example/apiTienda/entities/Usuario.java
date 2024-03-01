@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -22,102 +21,137 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.transaction.Transactional;
 
+/**
+ * Clase de entidad que representa un usuario. Anotada con JPA para mapearla a
+ * la base de datos. Implementa UserDetails para la autenticación de Spring
+ * Security.
+ */
 @Entity
 public class Usuario implements UserDetails {
-	  private static final long serialVersionUID = 1L;
-	  	@Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long id;
-	    private String firstName;
-	    private String lastName;
-	    @Column(unique = true)
-	    private String email;
-	    private String password;
 
-	    @ElementCollection(fetch = FetchType.EAGER, targetClass = Role.class)
-	    @Enumerated(EnumType.STRING)
-	    @CollectionTable(name="usuario_rol")
-	    @Column(name ="RolesUsuario")
-	    private Set<Role> roles = new HashSet<>();
+	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Id del usuario.
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	    @Transactional
-	    @Override
-	    public Collection<? extends GrantedAuthority> getAuthorities() {
-	        // Cargar la colección de roles de manera temprana
-	        roles.size(); // Esto carga la colección de roles
+	/**
+	 * Nombre del usuario.
+	 */
+	private String firstName;
 
-	        return roles.stream()
-	                .map(role -> new SimpleGrantedAuthority(role.name()))
-	                .collect(Collectors.toList());
-	    }
-	    @Override
-	    public String getUsername() {
-	        return email;
-	    }
+	/**
+	 * Apellido del usuario.
+	 */
+	private String lastName;
 
-	    @Override
-	    public boolean isAccountNonExpired() {
-	        return true;
-	    }
+	/**
+	 * Correo electrónico único del usuario.
+	 */
+	@Column(unique = true)
+	private String email;
 
-	    @Override
-	    public boolean isAccountNonLocked() {
-	        return true;
-	    }
+	/**
+	 * Contraseña del usuario.
+	 */
+	private String password;
 
-	    @Override
-	    public boolean isCredentialsNonExpired() {
-	        return true;
-	    }
+	/**
+	 * Roles asignados al usuario.
+	 */
+	@ElementCollection(fetch = FetchType.EAGER, targetClass = Role.class)
+	@Enumerated(EnumType.STRING)
+	@CollectionTable(name = "usuario_rol")
+	@Column(name = "RolesUsuario")
+	private Set<Role> roles = new HashSet<>();
 
-	    @Override
-	    public boolean isEnabled() {
-	        return true;
-	    }
+	/**
+	 * Obtiene la colección de roles asignados al usuario. Este método es anotado
+	 * con @Transactional para cargar la colección de roles de manera temprana.
+	 *
+	 * @return Colección de roles del usuario.
+	 */
+	@Transactional
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// Cargar la colección de roles de manera temprana
+		roles.size();
 
-	    @Override
-	    public String getPassword() {
-	        return password;
-	    }
+		return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
+	}
 
-	    // Métodos setter añadidos
-	    public void setFirstName(String firstName) {
-	        this.firstName = firstName;
-	    }
+	@Override
+	public String getUsername() {
+		return email;
+	}
 
-	    public void setLastName(String lastName) {
-	        this.lastName = lastName;
-	    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-	    public void setEmail(String email) {
-	        this.email = email;
-	    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-	    public void setPassword(String password) {
-	        this.password = password;
-	    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-	    public Set<Role> getRoles() {
-	        return roles;
-	    }
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
-	    public void setRoles(Set<Role> roles) {
-	        this.roles = roles;
-	    }
-		public Long getId() {
-			return id;
-		}
-		public String getFirstName() {
-			return firstName;
-		}
-		public String getLastName() {
-			return lastName;
-		}
-		public String getEmail() {
-			return email;
-		}
-	    
-	    
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	// Métodos setter añadidos
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
 }
-

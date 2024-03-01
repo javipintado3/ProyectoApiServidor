@@ -1,16 +1,22 @@
 package com.example.apiTienda.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.example.apiTienda.entities.Categoria;
 import com.example.apiTienda.entities.PrendaRopa;
 import com.example.apiTienda.error.exception.PrendaNotFoundException;
 
 import com.example.apiTienda.repository.PrendaRepository;
 import com.example.apiTienda.service.PrendaService;
 
+/**
+ * Implementación del servicio de la entidad PrendaRopa.
+ */
 @Service
 public class PrendaServiceImpl implements PrendaService {
 
@@ -37,7 +43,7 @@ public class PrendaServiceImpl implements PrendaService {
 	    // Obtener la prenda existente por ID
 	    PrendaRopa prenda = obtenerPrendaPorId(id);
 
-	    // Actualdsdsizar los campos de la prenda existente con los valores de la nueva prenda
+	    // Actualizar los campos de la prenda existente con los valores de la nueva prenda
 	    prenda.setCategoria(ropa.getCategoria());
 	    prenda.setPrecio(ropa.getPrecio());
 	    prenda.setTalla(ropa.getTalla());
@@ -56,5 +62,11 @@ public class PrendaServiceImpl implements PrendaService {
 	public Page<PrendaRopa> listarTodasLasPrendas(Pageable pageable) {
 		return prendaRepository.findAll(pageable);
 	}
+
+	@Override
+	public List<PrendaRopa> listarPorCategoria(Categoria categoria) {
+		return prendaRepository.findByCategoria(categoria);
+	}
+
 
 }

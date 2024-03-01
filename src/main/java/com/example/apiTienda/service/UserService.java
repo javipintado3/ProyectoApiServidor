@@ -7,8 +7,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import com.example.apiTienda.dto.response.user.UsuarioResponse;
 
 
+/**
+ * Interfaz que define los métodos de servicio para operaciones relacionadas con la entidad Usuario.
+ */
 public interface UserService {
-    UserDetailsService userDetailsService();
-    List<UsuarioResponse> getAllUsers();
 
+    /**
+     * Obtiene el servicio de detalles de usuario.
+     *
+     * @return Servicio de detalles de usuario.
+     */
+    UserDetailsService userDetailsService();
+
+    /**
+     * Obtiene una lista de respuestas de usuario que contienen información básica de todos los usuarios.
+     *
+     * @return Lista de respuestas de usuario.
+     */
+    List<UsuarioResponse> getAllUsers();
 }

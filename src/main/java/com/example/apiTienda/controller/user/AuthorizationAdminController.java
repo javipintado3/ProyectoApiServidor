@@ -15,20 +15,30 @@ import com.example.apiTienda.dto.response.user.UsuarioResponse;
 import com.example.apiTienda.service.UserService;
 
 
+/**
+ * Controlador que maneja las operaciones relacionadas con la autorización de administradores.
+ * Proporciona endpoints para obtener información sobre los usuarios con el rol de administrador.
+ */
 @RestController
 @RequestMapping("/api/v1/users")
 public class AuthorizationAdminController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(AuthorizationAdminController.class);
+    
+	// Definición de un logger para la clase AuthorizationAdminController
+	// Se utiliza para registrar eventos y mensajes durante la ejecución de la aplicación.
+    private static final Logger logger = LoggerFactory.getLogger(AuthorizationAdminController.class);
 
-   @Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-
+    /**
+     * Obtiene la lista de usuarios con el rol de administrador.
+     *
+     * @return ResponseEntity con la lista de respuestas UsuarioResponse y el código de estado correspondiente.
+     */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<UsuarioResponse>> showUsers() {
-    	logger.info("## AuthorizationAdminController :: showUsers" );
+        logger.info("## AuthorizationAdminController :: showUsers");
         List<UsuarioResponse> userList = userService.getAllUsers();
         return ResponseEntity.ok(userList);
     }

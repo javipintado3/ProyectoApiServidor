@@ -26,42 +26,67 @@ import com.example.apiTienda.entities.Role;
 import com.example.apiTienda.service.UserService;
 
 
+/**
+ * Configuración de seguridad para la aplicación. Define la configuración para la autenticación y la autorización
+ * mediante el uso de JSON Web Tokens (JWT).
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-	@Autowired
-    JwtAuthenticationFilter jwtAuthenticationFilter;
-	@Autowired
-     UserService userService;
-    
+
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    private UserService userService;
+
+    /**
+     * Configura el filtro de seguridad, la autenticación y la autorización.
+     *
+     * @param http Objeto HttpSecurity para configurar la seguridad.
+     * @return Cadena de filtros de seguridad configurada.
+     * @throws Exception Excepción lanzada si hay un problema con la configuración de seguridad.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-        .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request ->           
+            .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(request ->
                 request
-
-                .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/prendas/**").hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString())
-
-                .requestMatchers(HttpMethod.POST, "/api/v1/prendas/**").hasAuthority(Role.ROLE_ADMIN.toString())
- 	           .requestMatchers(HttpMethod.PUT, "/api/v1/prendas/**").hasAuthority(Role.ROLE_ADMIN.toString())
- 	          
- 	           .requestMatchers(HttpMethod.DELETE, "/api/v1/prendas/**").hasAuthority(Role.ROLE_ADMIN.toString())
- 	           	.requestMatchers("/api/v1/users/**").hasAuthority("ROLE_ADMIN")  // Modificado aquí
-                .anyRequest().authenticated())
-                .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-                .cors(Customizer.withDefaults()) // Configure CORS here with Customizer
-                .authenticationProvider(authenticationProvider()).addFilterBefore(
-                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                    .requestMatchers("/api/v1/auth/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/v1/prendas/**")
+                        .hasAnyAuthority(Role.ROLE_USER.toString(), Role.ROLE_ADMIN.toString())
+                    .requestMatchers(HttpMethod.POST, "/api/v1/prendas/**")
+                        .hasAuthority(Role.ROLE_ADMIN.toString())
+                    .requestMatchers(HttpMethod.PUT, "/api/v1/prendas/**")
+                        .hasAuthority(Role.ROLE_ADMIN.toString())
+                    .requestMatchers(HttpMethod.DELETE, "/api/v1/prendas/**")
+                        .hasAuthority(Role.ROLE_ADMIN.toString())
+                    .requestMatchers("/api/v1/users/**")
+                        .hasAuthority("ROLE_ADMIN") 
+                    .anyRequest().authenticated())
+            .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+            .cors(Customizer.withDefaults()) // Configurar CORS aquí con Customizer
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
+    /**
+     * Configura el codificador de contraseñas para la aplicación.
+     *
+     * @return Instancia de PasswordEncoder configurada.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configura el proveedor de autenticación para la aplicación.
+     *
+     * @return Instancia de AuthenticationProvider configurada.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -70,18 +95,27 @@ public class SecurityConfiguration {
         return authProvider;
     }
 
+    /**
+     * Configura el administrador de autenticación para la aplicación.
+     *
+     * @param config Objeto AuthenticationConfiguration que contiene la configuración de autenticación.
+     * @return Instancia de AuthenticationManager configurada.
+     * @throws Exception Excepción lanzada si hay un problema con la configuración de autenticación.
+     */
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
-            throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-    
+
+    /**
+     * Configura la fuente de configuración CORS para permitir solicitudes desde cualquier origen.
+     *
+     * @return Fuente de configuración CORS configurada.
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
     }
-    
-   
 }

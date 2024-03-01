@@ -7,12 +7,33 @@ import org.springframework.stereotype.Repository;
 
 import com.example.apiTienda.entities.Usuario;
 
-
-
+/**
+ * Interfaz que define las operaciones de acceso a datos para la entidad Usuario.
+ */
 @Repository
 public interface UserRepository extends JpaRepository<Usuario, Long> {
-    // Since email is unique, we'll find users by email
+
+    /**
+     * Encuentra un usuario por su dirección de correo electrónico.
+     *
+     * @param email Dirección de correo electrónico del usuario.
+     * @return Usuario que corresponde a la dirección de correo electrónico especificada.
+     */
     Optional<Usuario> findByEmail(String email);
+
+    /**
+     * Encuentra un usuario por su identificación.
+     *
+     * @param id Identificación del usuario.
+     * @return Usuario que corresponde a la identificación especificada.
+     */
     Optional<Usuario> findById(Long id);
+
+    /**
+     * Verifica si existe un usuario con la dirección de correo electrónico especificada.
+     *
+     * @param email Dirección de correo electrónico a verificar.
+     * @return true si existe un usuario con la dirección de correo electrónico especificada, false de lo contrario.
+     */
     Boolean existsByEmail(String email);
 }

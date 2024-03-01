@@ -17,6 +17,9 @@ import com.example.apiTienda.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Implementación del servicio de la entidad Usuario.
+ */
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {

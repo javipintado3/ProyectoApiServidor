@@ -17,6 +17,9 @@ import com.example.apiTienda.error.exception.PrendaNotFoundException;
 import com.example.apiTienda.repository.PrendaRepository;
 import com.example.apiTienda.service.impl.PrendaServiceImpl;
 
+/**
+ * Clase de pruebas para la implementación de PrendaService.
+ */
 @SpringBootTest
 public class PrendaServiceImplTest {
 

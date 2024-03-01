@@ -1,7 +1,6 @@
 package com.example.apiTienda.service.user.impl;
 
 
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,15 +18,26 @@ import com.example.apiTienda.service.user.JwtService;
 
 import lombok.Builder;
 
+/**
+ * Implementación del servicio de autenticación.
+ */
 @Builder
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private UserRepository userRepository; // Asegúrate de que UserRepository esté inyectado correctamente
+
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    // Constructor para inyección de dependencias (si usas Spring)
+    /**
+     * Constructor para la inyección de dependencias.
+     *
+     * @param userRepository        Repositorio de usuarios.
+     * @param passwordEncoder       Codificador de contraseñas.
+     * @param jwtService            Servicio JWT.
+     * @param authenticationManager Administrador de autenticación.
+     */
     public AuthenticationServiceImpl(UserRepository userRepository,
                                      PasswordEncoder passwordEncoder,
                                      JwtService jwtService,
@@ -38,12 +48,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
+    /**
+     * Registra un nuevo usuario y devuelve un token JWT.
+     *
+     * @param request Datos del usuario a registrar.
+     * @return Respuesta de autenticación que contiene el token JWT.
+     */
     @Override
     public JwtAuthenticationResponse signup(SignUpRequest request) {
-        if(userRepository.existsByEmail(request.getEmail())) {
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("Email already in use.");
         }
-        // Corrige la forma de construir el objeto 'User'
+
         Usuario user = new Usuario();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -51,21 +67,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.getRoles().add(Role.ROLE_USER); // Asegúrate de que Role.USER esté definido correctamente
         userRepository.save(user);
+
         String jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
+    /**
+     * Realiza la autenticación del usuario y devuelve un token JWT.
+     *
+     * @param request Datos del usuario para la autenticación.
+     * @return Respuesta de autenticación que contiene el token JWT.
+     */
     @Override
     public JwtAuthenticationResponse signin(SigninRequest request) {
-        // Maneja la autenticación
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        
-       // SecurityContextHolder.getContext().setAuthentication(authentication);
 
         Usuario user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+
         String jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 }
+

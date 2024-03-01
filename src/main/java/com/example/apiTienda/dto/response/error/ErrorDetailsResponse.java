@@ -2,40 +2,61 @@ package com.example.apiTienda.dto.response.error;
 
 import java.util.Date;
 
+/**
+ * Clase que representa la estructura de respuesta detallada para errores (ErrorDetailsResponse).
+ * Contiene la información detallada sobre un error en la respuesta.
+ */
 public class ErrorDetailsResponse {
-	 private Date timestamp;
-	    private String message;
-	    private String details;
+	
+	/**
+     * Marca de tiempo del error.
+     */
+    private Date timestamp;
 
-	    public ErrorDetailsResponse(Date timestamp, String message, String details) {
-	        super();
-	        this.timestamp = timestamp;
-	        this.message = message;
-	        this.details = details;
-	    }
+    /**
+     * Mensaje del error.
+     */
+    private String message;
 
-		public Date getTimestamp() {
-			return timestamp;
-		}
+    /**
+     * Detalles adicionales del error.
+     */
+    private String details;
 
-		public void setTimestamp(Date timestamp) {
-			this.timestamp = timestamp;
-		}
+    /**
+     * Constructor que inicializa una instancia de ErrorDetailsResponse.
+     *
+     * @param timestamp Marca de tiempo del error.
+     * @param message   Mensaje del error.
+     * @param details   Detalles adicionales del error.
+     */
+    public ErrorDetailsResponse(Date timestamp, String message, String details) {
+        this.timestamp = timestamp;
+        this.message = message;
+        this.details = details;
+    }
 
-		public String getMessage() {
-			return message;
-		}
+	public Date getTimestamp() {
+		return timestamp;
+	}
 
-		public void setMessage(String message) {
-			this.message = message;
-		}
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
 
-		public String getDetails() {
-			return details;
-		}
+	public String getMessage() {
+		return message;
+	}
 
-		public void setDetails(String details) {
-			this.details = details;
-		}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
 }
-
