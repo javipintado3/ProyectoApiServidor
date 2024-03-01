@@ -50,6 +50,7 @@ Este proyecto es una aplicación de ejemplo que representa una tienda en línea.
 
 Para ejecutar la aplicación, puedes utilizar un entorno de desarrollo integrado (IDE) como IntelliJ o Eclipse. Asegúrate de tener las dependencias necesarias y una base de datos configurada según las propiedades definidas en el archivo `application.properties`.
 
-## [Documentación Postman](https://documenter.getpostman.com/view/32967765/2sA2rGwL4T)
+## Enlace de Documentación Postman
+[Documentación Postman](https://documenter.getpostman.com/view/32967765/2sA2rGwL4T)
 
 
